@@ -432,11 +432,6 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 			
 			GetNumCcds($gloriaAPI,$scope);
 			LoadCcdAttributes($gloriaAPI,$scope);
-			if ($scope.num_ccds>1){
-				SetCcdOrder($gloriaAPI,$scope,1);
-				LoadCcdAttributes($gloriaAPI,$scope);
-				SetCcdOrder($gloriaAPI,$scope,0);
-			}
 			
 			
 //			LoadContinuousMode($gloriaAPI,$scope)
@@ -511,6 +506,10 @@ function CcdDevice($gloriaAPI, $scope, $timeout, $sequenceFactory){
 				$scope.isExposing = true;
 				$scope.exposure_time[$scope.ccd_order] = $scope.exposure_time;
 				num_ccd_timer=max_ccd_timer;
+				
+				if ($scope.ccd_order == 1){
+					LoadCcdAttributes($gloriaAPI, $scope);	
+				}
 				
 				console.log("set exposure time:"+$scope.exposure_time[$scope.ccd_order]+" "+num_ccd_timer);
 				SetExposureTime($gloriaAPI, $scope);
